@@ -1,2 +1,2 @@
 # i dont own the script present in this repository, i just fixed most of it since stuff was missing or was outdated cuz versions, etc...
-# i dont know the legitimate owner of the pep.lua code, but all credit go to them
+# i dont know the legitimate owner of the file called pep, but all credit go to them
