@@ -1,14 +1,17 @@
 local Kavo = {}
+print("+=+ DEBUGGER: LOADING SERVICES...")
 
 local tween = game:GetService("TweenService")
 local tweeninfo = TweenInfo.new
 local input = game:GetService("UserInputService")
 local run = game:GetService("RunService")
 
+print("+=+ DEBUGGER: LOADING LIBRARY...")
+
 local Utility = {}
 local Objects = {}
 function Kavo:DraggingEnabled(frame, parent)
-        
+    print("+=+ DEBUGGER: Enabling drag function.")    
     parent = parent or frame
     
     local dragging = false
@@ -40,7 +43,10 @@ function Kavo:DraggingEnabled(frame, parent)
             parent.Position  = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
         end
     end)
+    print("+=+ DEBUGGER: Enabled drag function.")
 end
+
+print("+=+ DEBUGGER: LOADING UTILITY & THEMES...")
 
 function Utility:TweenObject(obj, properties, duration, ...)
     tween:Create(obj, tweeninfo(duration, ...), properties):Play()
@@ -138,18 +144,23 @@ end)
 
 local LibName = tostring(math.random(1, 100))..tostring(math.random(1,50))..tostring(math.random(1, 100))
 
+print("+=+ DEBUGGER: LOADING FUNCTIONS...")
+
 function Kavo:ToggleUI()
+    print("+=+ DEBUGGER: Toggling UI.")
     if game.CoreGui[LibName].Enabled then
         game.CoreGui[LibName].Enabled = false
     else
         game.CoreGui[LibName].Enabled = true
     end
+    print("+=+ DEBUGGER: Toggled UI.")
 end
 
 function Kavo.CreateLib(kavName, themeList)
     if not themeList then
         themeList = themes
     end
+    print("+=+ DEBUGGER: Started assigning theme. Theme: " ..themeList)
     if themeList == "DarkTheme" then
         themeList = themeStyles.DarkTheme
     elseif themeList == "LightTheme" then
@@ -181,10 +192,12 @@ function Kavo.CreateLib(kavName, themeList)
             themeList.ElementColor = Color3.fromRGB(32, 32, 38)
         end
     end
+    print("+=+ DEBUGGER: Succesfuly assigned theme. Theme: " ..themeList)
 
     themeList = themeList or {}
     local selectedTab 
     kavName = kavName or "Library"
+    print("+=+ DEBUGGER: Lib window creation started. Tab: " ..kavName)
     table.insert(Kavo, kavName)
     for i,v in pairs(game.CoreGui:GetChildren()) do
         if v:IsA("ScreenGui") and v.Name == kavName then
@@ -350,8 +363,9 @@ function Kavo.CreateLib(kavName, themeList)
             coverup.BackgroundColor3 = themeList.Header
         end
     end)()
-
+    
     function Kavo:ChangeColor(prope,color)
+        print("+=+ DEBUGGER: Changing color. Color & Prope: " ..color.. " & " ..prope)
         if prope == "Background" then
             themeList.Background = color
         elseif prope == "SchemeColor" then
@@ -363,13 +377,16 @@ function Kavo.CreateLib(kavName, themeList)
         elseif prope == "ElementColor" then
             themeList.ElementColor = color
         end
+        print("+=+ DEBUGGER: Color changed. Color & Prope: " ..color.. " & " ..prope)
     end
+    print("+=+ DEBUGGER: Lib window succesfuly created. Window: " ..kavName)
     local Tabs = {}
 
     local first = true
 
-    function Tabs:NewTab(tabName)
+    function Tabs:NewTab(tabName)   
         tabName = tabName or "Tab"
+        print("+=+ DEBUGGER: Tab creation started. Tab: " ..tabName)
         local tabButton = Instance.new("TextButton")
         local UICorner = Instance.new("UICorner")
         local page = Instance.new("ScrollingFrame")
@@ -455,6 +472,7 @@ function Kavo.CreateLib(kavName, themeList)
             end 
             Utility:TweenObject(tabButton, {BackgroundTransparency = 0}, 0.2)
         end)
+        print("+=+ DEBUGGER: Tab succesfuly created. Tab: " ..tabName)
         local Sections = {}
         local focusing = false
         local viewDe = false
@@ -470,6 +488,7 @@ function Kavo.CreateLib(kavName, themeList)
     
         function Sections:NewSection(secName, hidden)
             secName = secName or "Section"
+            print("+=+ DEBUGGER: Section creation started. Section: " ..secName)
             local sectionFunctions = {}
             local modules = {}
 	    hidden = hidden or false
@@ -572,7 +591,9 @@ function Kavo.CreateLib(kavName, themeList)
                 updateSectionFrame()
                 UpdateSize()
             local Elements = {}
+            print("+=+ DEBUGGER: Section succesfuly created. Section: " ..secName)
             function Elements:NewButton(bname, tipINf, callback)
+                print("+=+ DEBUGGER: Button creation started. Button: "..bname)
                 showLogo = showLogo or true
                 local ButtonFunction = {}
                 tipINf = tipINf or "Tip: Clicking this nothing will happen!"
@@ -770,10 +791,12 @@ function Kavo.CreateLib(kavName, themeList)
                 function ButtonFunction:UpdateButton(newTitle)
                     btnInfo.Text = newTitle
                 end
+                print("+=+ DEBUGGER: Button succesfuly created. Button: "..bname)
                 return ButtonFunction
             end
 
             function Elements:NewTextBox(tname, tTip, callback)
+                print("+=+ DEBUGGER: Text Box creation started. Box: "..tname)
                 tname = tname or "Textbox"
                 tTip = tTip or "Gets a value of Textbox"
                 callback = callback or function() end
@@ -967,9 +990,11 @@ function Kavo.CreateLib(kavName, themeList)
                         TextBox.TextColor3 = themeList.SchemeColor
                     end
                 end)()
+                print("+=+ DEBUGGER: Text Box succesfully created. Box: " ..tname)
             end 
 
                 function Elements:NewToggle(tname, nTip, callback)
+                    print("+=+ DEBUGGER: Toggle creation started. Toggle: " ..tname)
                     local TogFunction = {}
                     tname = tname or "Toggle"
                     nTip = nTip or "Prints Current Toggle State"
@@ -1215,10 +1240,12 @@ function Kavo.CreateLib(kavName, themeList)
                             pcall(callback, toggled)
                         end
                     end
+                    print("+=+ DEBUGGER: Toggle succesfully created. | Toggle: " ..tname)
                     return TogFunction
             end
 
             function Elements:NewSlider(slidInf, slidTip, startVal, minvalue, maxvalue,  callback)
+                print("+=+ DEBUGGER: Slider creation started.")
                 slidInf = slidInf or "Slider"
                 slidTip = slidTip or "Slider tip here"
                 maxvalue = maxvalue or 500
@@ -1459,10 +1486,12 @@ function Kavo.CreateLib(kavName, themeList)
                         wait(0)
                         viewDe = false
                     end
-                end)        
+                end)    
+                print("+=+ DEBUGGER: Slider succesfully created.")
             end
 
             function Elements:NewDropdown(dropname, dropinf, list, callback)
+                print("+=+ DEBUGGER: Dropdown creation started.")
                 local DropFunction = {}
                 dropname = dropname or "Dropdown"
                 list = list or {}
@@ -1909,8 +1938,10 @@ function Kavo.CreateLib(kavName, themeList)
                     end
                 end
                 return DropFunction
+                print("+=+ DEBUGGER: Dropdown succesfully created.")
             end
             function Elements:NewKeybind(keytext, keyinf, first, callback)
+                print("+=+ DEBUGGER: Keybind creation started.")
                 keytext = keytext or "KeybindText"
                 keyinf = keyinf or "KebindInfo"
                 callback = callback or function() end
@@ -2121,9 +2152,11 @@ function Kavo.CreateLib(kavName, themeList)
 
                     end
                 end)()
+                print("+=+ DEBUGGER: Keybind succesfully created.")
             end
 
             function Elements:NewColorPicker(colText, colInf, defcolor, callback)
+                print("+=+ DEBUGGER: Color Picker creation started.")
                 colText = colText or "ColorPicker"
                 callback = callback or function() end
                 defcolor = defcolor or Color3.fromRGB(1,1,1)
@@ -2589,9 +2622,11 @@ function Kavo.CreateLib(kavName, themeList)
                     end
                 end)
                 setcolor({h,s,v})
+                print("+=+ DEBUGGER: Color Picker succesfully created.")
             end
             
             function Elements:NewLabel(title)
+              print("+=+ DEBUGGER: Text label creation started. | Label: " .. title)
             	local labelFunctions = {}
             	local label = Instance.new("TextLabel")
             	local UICorner = Instance.new("UICorner")
@@ -2633,6 +2668,7 @@ function Kavo.CreateLib(kavName, themeList)
                 		label.Text = "  "..newText
                 	end
                 end	
+                print("+=+ DEBUGGER: Text label succesfully created. | Label: " .. title)
                 return labelFunctions
             end	
             return Elements
@@ -2641,4 +2677,6 @@ function Kavo.CreateLib(kavName, themeList)
     end  
     return Tabs
 end
+print("+=+ DEBUGGER: SCRIPT DONE EXECUTING, HAVE A NICE DAY...")
+print("+=+ DEBUGGER: RETURNING...")
 return Kavo
